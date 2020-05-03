@@ -16,27 +16,35 @@ def load_library(file_path)
  new_hash
 end
 
-def get_japanese_emoticon(load_library, emoticons)
-  
-  
-  # code goes here
+def get_japanese_emoticon(file_path, emoticons)
+ sorry_message = "Sorry, that emoticon was not found"
+  l_library = load_library(file_path)
+  l_library.map do |new_hash, value|
+    if emoticons == value[:english]
+    return value[:japanese]
+      #binding.pry
+    end
+  end 
+ sorry_message
 end
 
-def get_english_meaning(load_library, emoticons)
-  english_emoticons = {}
-binding.pry
-   load_library.map do |emoticons, value|
-     emoticons.map do |new_hash, value|
-       new_hash.map do |key, value|
-         if load_library[emoticons][new_hash][key][:english]
-           english_emoticons << load_library[emoticons][new_hash][key][:english]
-         end
-         if !load_library[emoticons][new_hash][key][value][:english]
-           puts sorry_message
-         end
-       end
-     end 
-   end 
-   english_emoticons
 
+  
+def get_english_meaning(file_path, emoticons)
+  sorry_message = "Sorry, that emoticon was not found"
+  l_library = load_library(file_path)
+  english_emoticons = " "
+  
+  l_library.map do |new_hash, value|
+    value.map do |key, value2|
+      if value2 == emoticons
+        english_emoticons = new_hash
+      end
+  
+    end 
+    if english_emoticons == " "
+        english_emoticons = sorry_message
+      end
+  end 
+  english_emoticons
 end
